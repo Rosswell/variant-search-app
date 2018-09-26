@@ -1,5 +1,6 @@
 version: '3.6'
 services:
+
   genes:
     build:
       context: ./services/genes
@@ -11,3 +12,18 @@ services:
     environment:
       - FLASK_APP=project/__init__.py
       - FLASK_ENV=development
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@variants-db:5432/variants_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@variants-db:5432/variants_test
+    depends_on:
+      - variants-db
+      
+  variants-db:
+    build:
+      context: ./services/genes/project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
