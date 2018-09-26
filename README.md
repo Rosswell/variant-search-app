@@ -15,10 +15,10 @@ $ git clone git@github.com:Rosswell/variant-search-app.git
 Navigate to the backend directory and create a python virtual environment
 ```
 $ cd variant-search-app/services/genes
-$ python3.6 -m venv variant-search-app
+$ python3.6 -m venv env
 ```
 Activate the virtual environment and install the flask libraries required to handle API requests
 ```
-$ source variant-search-app/bin/activate
+$ source env/bin/activate
 $ pip install -r requirements.txt
 ```
