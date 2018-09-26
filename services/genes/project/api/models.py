@@ -1,9 +1,9 @@
 from project import db
 
 
-class Variants(db.Model):
+class Variant(db.Model):
 
-    __tablename__ = 'variants'
+    __tablename__ = 'variant'
 
     id = db.Column(db.Integer, primary_key=True)
     gene = db.Column(db.String(50))
@@ -29,3 +29,7 @@ class Variants(db.Model):
     accession = db.Column(db.String(25))
     reported_ref = db.Column(db.String(100))
     reported_alt = db.Column(db.String(100))
+
+    def __init__(self, gene):
+        self.gene = gene
+        

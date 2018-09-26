@@ -1,3 +1,3 @@
-CREATE DATABASE variants_prod;
-CREATE DATABASE variants_dev;
-CREATE DATABASE variants_test;
+CREATE DATABASE variant_prod;
+CREATE DATABASE variant_dev;
+CREATE DATABASE variant_test;
