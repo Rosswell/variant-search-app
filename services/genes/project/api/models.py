@@ -1,4 +1,5 @@
 from project import db
+import datetime
 
 
 class Variant(db.Model):
@@ -7,10 +8,12 @@ class Variant(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     gene = db.Column(db.String(50))
-    nucleotide_change = db.Column(db.String(150))
-    protein_change = db.Column(db.String(100))
-    other_mappings = db.Column(db.String(100))
+    # TODO: check to see if this is also sometimes a list
+    nucleotide_change = db.Column(db.String())
+    protein_change = db.Column(db.String())
+    other_mappings = db.Column(db.String())
     alias = db.Column(db.String(100))
+    # TODO: sometimes a list of transcripts
     transcripts = db.Column(db.String())
     region = db.Column(db.String(50))
     reported_classification = db.Column(db.String(100))
@@ -21,9 +24,9 @@ class Variant(db.Model):
     url = db.Column(db.String(100))
     submitter_comment = db.Column(db.String())
     assembly = db.Column(db.String(15))
-    chr = db.Column(db.Integer())
-    genomic_start = db.Column(db.Integer())
-    genomic_stop = db.Column(db.Integer())
+    chr = db.Column(db.String(5))
+    genomic_start = db.Column(db.Float())
+    genomic_stop = db.Column(db.Float())
     ref = db.Column(db.String(100))
     alt = db.Column(db.String(100))
     accession = db.Column(db.String(25))
