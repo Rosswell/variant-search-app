@@ -30,14 +30,23 @@ class TestGeneService(BaseTestCase):
 
     def test_single_gene(self):
         """ Ensure get single gene behaves correctly."""
-        genes = add_variants(multi_variant_data['data'])
+        genes = add_variants(multi_variant_data['data']['variants'])
         with self.client:
-            response = self.client.get('/genes/{}'.format(multi_variant_data['data'][0]['gene']))
+            response = self.client.get('/genes/{}'.format(genes[0].gene))
             data = json.loads(response.data.decode())
-            # print(data)
             self.assert200(response)
-            self.assertEqual(multi_variant_data['data'][0]['gene'], data['data']['variants'][0]['gene'])
+            for variant in data['data']['variants']:
+                accession_id = variant['accession']
+                self.assertDictEqual(variant, [d for d in multi_variant_data['data']['variants'] if d['accession'] == accession_id][0])
             self.assertEqual('success', data['status'])
+
+    def test_single_nonexistent_gene(self):
+        """ Ensure that a nonexistent gene returns nothing """
+        with self.client:
+            response = self.client.get('/genes/nonexistent')
+            data = json.loads(response.data.decode())
+            self.assertTrue(len(data['data']['variants']) == 0)
+            self.assertEqual(data, 'boop')
 
 
 if __name__ == '__main__':
