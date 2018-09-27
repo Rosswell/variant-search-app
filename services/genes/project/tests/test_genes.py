@@ -46,7 +46,6 @@ class TestGeneService(BaseTestCase):
             response = self.client.get('/genes/nonexistent')
             data = json.loads(response.data.decode())
             self.assertTrue(len(data['data']['variants']) == 0)
-            self.assertEqual(data, 'boop')
 
 
 if __name__ == '__main__':

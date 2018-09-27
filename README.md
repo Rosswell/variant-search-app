@@ -36,4 +36,3 @@ $ pip install -r requirements.txt
 7. Stand up frontend
 8. Create MVP dynamically rendered components
 9. Create table components and associated subcomponents
-10.
