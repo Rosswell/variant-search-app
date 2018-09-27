@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import GeneTable from './components/Table'
 
 
 class App extends React.Component {
@@ -16,18 +17,9 @@ class App extends React.Component {
 
     render() {
       return (
-          <section className="section">
-              <div className="container">
-                  <div className="columns">
-                      <div className="column">
-                          <br/>
-                          <h1 className="title">All Genes</h1>
-                          <hr/>
-                          <br/>
-                      </div>
-                  </div>
-              </div>
-          </section>
+        <div>
+          <GeneTable />
+        </div>
       )
     }
 };
