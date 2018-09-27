@@ -19,7 +19,7 @@ def get_gene(gene_id):
     variants in a single gene
     """
 
-    variants = [variant.to_json() for variant in Variant.query.limit(100).all()]
+    variants = [variant.to_json() for variant in Variant.query.filter_by(gene=gene_id).all()]
     if variants:
         return jsonify({
             'status': 'success',

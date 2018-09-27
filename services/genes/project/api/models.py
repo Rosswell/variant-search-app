@@ -1,5 +1,4 @@
 from project import db
-import datetime
 
 
 class Variant(db.Model):
