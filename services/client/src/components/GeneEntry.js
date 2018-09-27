@@ -8,13 +8,13 @@ export default class GeneEntry extends React.Component {
   handleGeneVerification = (e) => {
     // error handling for text input
     e.preventDefault();
-    const gene = e.target.elements.option.value.trim()
+    const gene = e.target.elements.userInput.value.trim()
     const error = this.props.fetchData(gene)
 
     this.setState(() => ({ error }))
 
     if (!error) {
-      e.target.elements.gene.value = ''
+      e.target.elements.userInput.value = ''
     }
   };
   render() {
@@ -25,7 +25,7 @@ export default class GeneEntry extends React.Component {
         onSubmit={this.handleGeneVerification}
         className="add-option"
         >
-          <input className='add-option__input' type="text" name ="option" />
+          <input className='add-option__input' type="text" name ="userInput" />
           <button className="button">Search for Gene</button>
         </form>
       </div>

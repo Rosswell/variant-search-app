@@ -7,50 +7,53 @@ import GeneEntry from './components/GeneEntry';
 import './styles/styles.scss';
 
 class App extends React.Component {
-    state = {
-      searchedGene: '',
-      variantData: []
-    };
+  state = {
+    searchedGene: '',
+    variantData: []
+  };
 
-    fetchData = (searchedGene) => {
-      // show the loading overlay
-      this.setState({
-        loading: true,
-        searchedGene: searchedGene
-      })
-      // fetch data
-      axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/genes/${this.state.searchedGene}`)
-          .then((res) => { 
-            console.log(res);
-            this.setState({
-              variantData: res.data.data.variants,
-              loading: false
-            });
-          }).catch((err) => { 
-            console.log(err);
-            return err;
-          });
-    };
+  fetchData = (searchedGene) => {
+    // show the loading overlay
+    this.setState({
+      loading: true,
+      searchedGene: searchedGene
+    });
+    // fetch data
+    axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/genes/${searchedGene}`)
+      .then((res) => { 
+        console.log(res);
+        this.setState({
+          variantData: res.data.data.variants,
+          loading: false
+        });
+      }).catch((err) => { 
+        console.log(err);
+        return err;
+    });
+  };
 
-    // load default data
-    componentDidMount() {
-    this.fetchData('')
+  // load default data
+  componentDidMount() {
+  this.fetchData('')
+}
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <GeneEntry 
+          fetchData={this.fetchData}
+
+        />
+        <GeneTable 
+          data={this.state.variantData}
+          geneInput={this.state.searchedGene}
+          fetchData={this.fetchData}
+          loading={this.state.loading}
+        />
+      </div>
+    )
   }
-
-    render() {
-      return (
-        <div>
-          <Header />
-          <GeneEntry 
-            fetchData={this.fetchData}
-
-          />
-          <GeneTable 
-            data={this.state.variantData}
-          />
-        </div>
-      )
-    }
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

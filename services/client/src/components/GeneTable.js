@@ -8,48 +8,54 @@ const getColumns = (data) => {
   const columns = [];
   const sample = data[0];
   for (let key in sample) {
-    if (key === "_id") continue;
-    columns.push({
-      accessor: key,
-      Header: key
-    });
+    if (key === "gene") {
+      columns.push({
+        accessor: key,
+        Header: key,
+        pivot: true
+      });
+    } else {
+      columns.push({
+        accessor: key,
+        Header: key
+      });
+    };
   }
   return columns;
 }
 
+
 export default class GeneTable extends React.Component {
   state = {
-    data: [],
     pages: null,
-    loading: true,
-    geneInput: 'BRAF'
+    loading: true
   };
 
-  handleSearchGene = (option) => {
-    if (!option) {
-      return 'Enter valid gene to search for'
-    } else if (this.state.options.indexOf(option) > -1) {
-      return 'This option already exists'
-    }
+  // handleSearchGene = (option) => {
+  //   if (!this.state.geneInput) {
+  //     return 'Enter valid gene to search for'
+  //   } else if (this.state.data.indexOf(option) > -1) {
+  //     return 'This option already exists'
+  //   }
 
-    this.setState((prevState) => ({
-      options: prevState.options.concat(option)
-    }))
-  };
+  //   this.setState((prevState) => ({
+  //     options: prevState.options.concat(option)
+  //   }))
+  // };
 
-  fetchData() {
-            // show the loading overlay
-            this.setState({loading: true})
-            // fetch data
-            axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/genes/${this.state.geneInput}`)
-                .then((res) => { 
-                  console.log(res);
-                  this.setState({
-                    data: res.data.data.variants,
-                    loading: false
-                  });
-                }).catch((err) => { console.log(err); });
-          }
+  // fetchData = (searchedGene) => {
+  //   // show the loading overlay
+  //   this.setState({loading: true})
+  //   // fetch data
+  //   axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/genes/${searchedGene}`)
+  //       .then((res) => { 
+  //         console.log(res);
+  //         this.setState({
+  //           data: res.data.data.variants,
+  //           loading: false
+  //         });
+  //       }).catch((err) => { console.log(err); });
+  // }
 
   render() {
     return(
@@ -57,14 +63,15 @@ export default class GeneTable extends React.Component {
         <ReactTable
           // data={this.state.data}
           data={this.props.data}
-          columns={getColumns(this.state.data)}
+          columns={getColumns(this.props.data)}
+          // pivotBy={["gene"]}
           pages={this.state.pages}
-          loading={this.state.loading}
+          loading={this.props.loading}
           // sorting and filtering handled server-side 
           // TODO: figure out where to do this most efficiently. I would guess server but maybe not
           manual
           // 
-          // onFetchData={(state, instance) => {this.fetchData()}}
+          onFetchData={(state, instance) => {this.props.fetchData(this.props.geneInput)}}
         />
       </div>
     )
