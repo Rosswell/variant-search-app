@@ -1,24 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import GeneTable from './components/Table'
-
+import GeneTable from './components/GeneTable';
+import Header from './components/Header';
+import GeneEntry from './components/GeneEntry';
+import './styles/styles.scss';
 
 class App extends React.Component {
-    constructor() {
-        super();
-        this.getGenes();
-    }
-    getGenes() {
-        axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/genes/RHD`)
-        .then((res) => { console.log(res); })
-        .catch((err) => { console.log(err); });
-    }
+    state = {
+      searchedGene: '',
+      variantData: []
+    };
+
+    fetchData = (searchedGene) => {
+      // show the loading overlay
+      this.setState({
+        loading: true,
+        searchedGene: searchedGene
+      })
+      // fetch data
+      axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/genes/${this.state.searchedGene}`)
+          .then((res) => { 
+            console.log(res);
+            this.setState({
+              variantData: res.data.data.variants,
+              loading: false
+            });
+          }).catch((err) => { 
+            console.log(err);
+            return err;
+          });
+    };
+
+    // load default data
+    componentDidMount() {
+    this.fetchData('')
+  }
 
     render() {
       return (
         <div>
-          <GeneTable />
+          <Header />
+          <GeneEntry 
+            fetchData={this.fetchData}
+
+          />
+          <GeneTable 
+            data={this.state.variantData}
+          />
         </div>
       )
     }

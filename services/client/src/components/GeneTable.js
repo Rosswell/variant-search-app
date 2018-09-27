@@ -25,7 +25,19 @@ export default class GeneTable extends React.Component {
     geneInput: 'BRAF'
   };
 
-  fetchData(state, instance) {
+  handleSearchGene = (option) => {
+    if (!option) {
+      return 'Enter valid gene to search for'
+    } else if (this.state.options.indexOf(option) > -1) {
+      return 'This option already exists'
+    }
+
+    this.setState((prevState) => ({
+      options: prevState.options.concat(option)
+    }))
+  };
+
+  fetchData() {
             // show the loading overlay
             this.setState({loading: true})
             // fetch data
@@ -43,14 +55,16 @@ export default class GeneTable extends React.Component {
     return(
       <div>
         <ReactTable
-          data={this.state.data}
+          // data={this.state.data}
+          data={this.props.data}
           columns={getColumns(this.state.data)}
           pages={this.state.pages}
           loading={this.state.loading}
           // sorting and filtering handled server-side 
           // TODO: figure out where to do this most efficiently. I would guess server but maybe not
           manual
-          onFetchData={(state, instance) => {this.fetchData(state, instance)}}
+          // 
+          // onFetchData={(state, instance) => {this.fetchData()}}
         />
       </div>
     )
