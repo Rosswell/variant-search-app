@@ -20,12 +20,12 @@ export default class GeneEntry extends React.Component {
   render() {
     return (
       <div>
-        {this.state.error && <p className="add-option-error">{this.state.error}</p>}
+        {this.state.error && <p className="gene-entry-error">{this.state.error}</p>}
         <form 
         onSubmit={this.handleGeneVerification}
-        className="add-option"
+        className="gene-entry"
         >
-          <input className='add-option__input' type="text" name ="userInput" />
+          <input className='gene-entry__input' type="text" name ="userInput" />
           <button className="button">Search for Gene</button>
         </form>
       </div>

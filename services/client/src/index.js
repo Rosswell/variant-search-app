@@ -4,7 +4,7 @@ import axios from 'axios';
 import GeneTable from './components/GeneTable';
 import Header from './components/Header';
 import GeneEntry from './components/GeneEntry';
-import './styles/styles.scss';
+import './styles/styles.css';
 
 class App extends React.Component {
   state = {
@@ -45,6 +45,7 @@ class App extends React.Component {
           fetchData={this.fetchData}
 
         />
+        <br/>
         <GeneTable 
           data={this.state.variantData}
           geneInput={this.state.searchedGene}
