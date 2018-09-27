@@ -1,0 +1,33 @@
+.gene-entry {
+    display: flex;
+    padding: $m-size;
+    flex-direction: column;
+}
+
+.ene-entry-error {
+    color: $off-black;
+    font-style: italic;
+    margin: $m-size 0 0 0;
+    padding: 0 $m-size;
+    text-align: center;
+}
+
+.gene-entry__input {
+    flex-grow: 1;
+    background: $dark-blue;
+    color: $off-black;
+    border: none;
+    border: .3rem solid darken($dark-blue, 10%);
+    margin: 0 0 $s-size 0; //margin-right: $s-size;
+    padding: $s-size;
+}
+
+// parameter is the condition under which to apply the following styles
+@media (min-width: $desktop-breakpoint) {
+    .gene-entry {
+        flex-direction: row;
+    }
+    .gene-entry__input {
+        margin: 0 $s-size 0 0;
+    }
+}
