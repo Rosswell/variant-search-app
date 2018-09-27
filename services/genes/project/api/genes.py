@@ -13,16 +13,37 @@ def ping_gene():
 
 
 @genes_blueprint.route('/genes/<gene_id>', methods=['GET'])
-def get_genes(gene_id):
+def get_gene(gene_id):
     """
     GET the details for a single gene. This will likely result in multiple results due to the potential number of
     variants in a single gene
     """
 
-    response_object = {
+    variants = [variant.to_json() for variant in Variant.query.limit(100).all()]
+    if variants:
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'variants': variants
+            }
+        }), 200
+    return jsonify({
+            'status': 'no variants for gene',
+            'data': {
+                'variants': []
+            }
+        }), 200
+
+
+@genes_blueprint.route('/genes/', methods=['GET'])
+def get_all_genes():
+    """
+    GET the details for 100 genes. This will likely result in multiple results due to the potential number of
+    variants in a single gene
+    """
+    return jsonify({
         'status': 'success',
         'data': {
-            'variants': [variant.to_json() for variant in Variant.query.filter_by(gene=gene_id).all()]
+            'variants': [variant.to_json() for variant in Variant.query.limit(100).all()]
         }
-    }
-    return jsonify(response_object), 200
+    }), 200
