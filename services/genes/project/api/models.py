@@ -30,6 +30,30 @@ class Variant(db.Model):
     reported_ref = db.Column(db.String(100))
     reported_alt = db.Column(db.String(100))
 
-    def __init__(self, gene):
-        self.gene = gene
-        
+    def to_json(self):
+        return {
+            'gene'                   : self.gene,
+            'nucleotide_change'      : self.nucleotide_change,
+            'protein_change'         : self.protein_change,
+            'other_mappings'         : self.other_mappings,
+            'alias'                  : self.alias,
+            'transcripts'            : self.transcripts,
+            'region'                 : self.region,
+            'reported_classification': self.reported_classification,
+            'inferred_classification': self.inferred_classification,
+            'source'                 : self.source,
+            'last_evaluated'         : self.last_evaluated,
+            'last_updated'           : self.last_updated,
+            'url'                    : self.url,
+            'submitter_comment'      : self.submitter_comment,
+            'assembly'               : self.assembly,
+            'chr'                    : self.chr,
+            'genomic_start'          : self.genomic_start,
+            'genomic_stop'           : self.genomic_stop,
+            'ref'                    : self.ref,
+            'alt'                    : self.alt,
+            'accession'              : self.accession,
+            'reported_ref'           : self.reported_ref,
+            'reported_alt'           : self.reported_alt
+        }
+
