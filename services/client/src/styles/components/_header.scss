@@ -7,8 +7,9 @@
 .header__title {
   background: -webkit-gradient(linear, left top, right bottom, from($light-green), to($dark-blue));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: $l-size;
+  font-size: $xl-size;
   margin: 0;
 }
 

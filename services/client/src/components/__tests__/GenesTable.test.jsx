@@ -60,7 +60,39 @@ const genes = [
 test('GeneTable renders properly', () => {
   const wrapper = shallow(<GeneTable data={genes}/>);
   const element = wrapper.find('ReactTable');
-  console.log(element)
-  expect(element.length).toBe(2);
-  expect(element.get(0).props.children).toBe('michael');
+  expect(element.length).toBe(1);
+});
+
+test('GeneTable should have 2 rows of variants', () => {
+  const wrapper = shallow(<GeneTable data={genes}/>);
+  const element = wrapper.find('ReactTable');
+  expect(element.get(0).props.data.length).toBe(2);
+});
+
+test('GeneTable variants should have the proper id', () => {
+  const wrapper = shallow(<GeneTable data={genes}/>);
+  const element = wrapper.find('ReactTable');
+  expect(element.length).toBe(1);
+  element.get(0).props.data.map((variant, i) => {
+    expect(variant.id).toBe(i + 1);
+  })
+});
+
+test('GeneTable should not render any variants if provided no data', () => {
+  const wrapper = shallow(<GeneTable data={{}}/>);
+  const element = wrapper.find('ReactTable');
+  expect(!element.get(0).props.data).toBe(false);
+});
+
+test('GeneTable should not update its variants if provided new data', () => {
+  let wrapper = shallow(<GeneTable data={genes}/>);
+  let element = wrapper.find('ReactTable');
+  expect(element.get(0).props.data.length).toBe(2);
+
+  genes.push(...genes);
+  expect(genes.length).toBe(4);
+
+  wrapper = wrapper.setProps(genes)
+  element = wrapper.find('ReactTable');
+  expect(element.get(0).props.data.length).toBe(4);
 });

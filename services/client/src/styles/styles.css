@@ -20,8 +20,9 @@ button:disabled {
 .header__title {
   background: -webkit-gradient(linear, left top, right bottom, from(#A4D27A), to(#2286B8));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 3.2rem;
+  font-size: 4.8rem;
   margin: 0; }
 
 @media (max-width: 45rem) {
@@ -89,7 +90,7 @@ button:disabled {
 .react-autosuggest__suggestions-container--open {
   display: block;
   position: absolute;
-  top: 194px;
+  top: 212px;
   left: 24px;
   width: 280px;
   background-color: #fff;
