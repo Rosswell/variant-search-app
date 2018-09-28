@@ -9,7 +9,8 @@ import './styles/styles.css';
 class App extends React.Component {
   state = {
     searchedGene: '',
-    variantData: []
+    variantData: [],
+    geneSuggestions: []
   };
 
   fetchData = (searchedGene) => {
@@ -33,9 +34,18 @@ class App extends React.Component {
   };
 
   // load default data
-//   componentDidMount() {
-//   this.fetchData('')
-// }
+  componentDidMount() {
+    axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/gene_names/`)
+        .then((res) => { 
+          console.log('gene names getted successfully');
+          this.setState({
+            geneSuggestions: res.data.data.gene_names
+          });
+        }).catch((err) => { 
+          console.log(err);
+          return err;
+      });
+};
 
   render() {
     return (
@@ -43,7 +53,7 @@ class App extends React.Component {
         <Header />
         <GeneEntry 
           fetchData={this.fetchData}
-          data={this.state.variantData}
+          geneNames={this.state.geneSuggestions}
         />
         <br/>
         {
