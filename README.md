@@ -3,9 +3,9 @@
 ![](assets/vs_demo.gif)
 
 ## Prerequisites
-TODO: add hyperlinks
-Python 3
+Python 3.6
 npm or yarn
+docker-compose
 
 ## Installation
 Clone the repo
