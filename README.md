@@ -1,5 +1,7 @@
 # variant-search-app
 
+![](assets/vs_demo.gif)
+
 ## Prerequisites
 TODO: add hyperlinks
 Python 3
@@ -12,7 +14,7 @@ $ git clone git@github.com:Rosswell/variant-search-app.git
 ```
 
 ### Flask installation & setup
-Navigate to the backend directory and create a python virtual environment
+Navigate to the genes directory and create a python virtual environment
 ```
 $ cd variant-search-app/services/genes
 $ python3.6 -m venv env
@@ -24,16 +26,42 @@ $ pip install -r requirements.txt
 ```
 
 ### React installation & setup
-Navigate to the backend directory and create a python virtual environment
+Navigate to the client directory and install the libraries from package.lock
 ```
 $ cd variant-search-app/services/client
 $ yarn install
 ```
-Activate the virtual environment and install the flask libraries required to handle API requests
+
+### Standing up the app
+Spin up the postgres/flask docker container. This will serve the API endpoints at 0.0.0.0:5001.
 ```
-$ source env/bin/activate
-$ pip install -r requirements.txt
+$ cd variant-search-app
+$ docker-compose -f docker-compose-dev.yml up -d --build
 ```
+Create and fill the DB
+```
+$ docker-compose -f docker-compose-dev.yml run genes python manage.py recreate-db
+$ cd services/genes
+$ python manage.py ingest-from-tsv
+```
+Start the React app
+```
+$ cd variant-search-app/services/client
+$ npm start
+```
+
+## Run the few tests that I had time to write
+Flask tests
+```
+$ cd variant-search-app
+$ docker-compose -f docker-compose-dev.yml run genes python manage.py test
+```
+React tests
+```
+$ cd variant-search-app/services/client
+$ npm test
+```
+
 ## The Process
 1. Build a static API route
 2. Attach API to sqlite DB, make API dynamic
@@ -51,3 +79,6 @@ $ pip install -r requirements.txt
 10. Style table components
 11. Backfill python tests
 12. Write React tests
+
+## Finally
+Please let me know if there are any issues! I think I'm going to continue to work on this since I wasn't able to dockerize the React app or host on AWS or any fun things like that

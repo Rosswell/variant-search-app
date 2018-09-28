@@ -4,6 +4,8 @@ from project.tests.data import multi_variant_data
 from project.api.genes import Variant
 import unittest
 import coverage
+import os
+
 
 COV = coverage.coverage(
     branch=True,
@@ -61,10 +63,11 @@ def cov():
 
 
 @cli.command()
-def ingest_from_tsv(tsv_path):
+def ingest_from_tsv():
     """ Convert data to csv with pipe separator - postgres misinterprets nondelimiter commas - and writes to the db """
     import pandas as pd
 
+    tsv_path = os.path.join(os.getcwd(), 'raw_data', 'variants.tsv')
     csv_filename = tsv_path[:-4] + '.csv'
     db_columns = ['gene', 'nucleotide_change', 'protein_change', 'other_mappings', 'alias', 'transcripts', 'region',
                   'reported_classification', 'inferred_classification', 'source', 'last_evaluated', 'last_updated',
@@ -75,15 +78,11 @@ def ingest_from_tsv(tsv_path):
     # filling NaNs with 'NULL' as some null values are already written that way. Making it ubiquitous for loading
 
     df.fillna('NULL').to_csv(csv_filename, sep='|', index=False, header=False)
-    db_engine = db.create_engine()
+    db_engine = db.create_engine("postgresql://postgres:postgres@localhost:5435/variant_dev")
     conn = db_engine.raw_connection()
     cursor = conn.cursor()
-    cursor.copy_from(csv_filename, table='variant', sep='|', null='NULL', columns=db_columns)
-
-    # df.to_sql('variant', db_engine, )
-    # db.session.c
-    # df.fillna('NULL')  # .to_csv(tsv_path[:-4] + '.csv', sep='|', index=False, header=False)
-    # # TODO: do this (requires preprocessing)
+    with open(csv_filename, 'r') as file:
+        cursor.copy_from(file, table='variant', sep='|', null='NULL', columns=db_columns)
 
 
 if __name__ == '__main__':
