@@ -88,14 +88,14 @@ button:disabled {
 
 .react-autosuggest__suggestions-container--open {
   display: block;
-  position: relative;
-  top: -19px;
-  left: 16px;
+  position: absolute;
+  top: 194px;
+  left: 24px;
   width: 280px;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
-  z-index: 100;
+  z-index: 100 !important;
   border-left: 0.3rem solid #1e817f;
   border-bottom: 0.3rem solid #1e817f;
   border-right: 0.3rem solid #1e817f; }

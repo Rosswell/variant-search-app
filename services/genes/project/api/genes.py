@@ -18,7 +18,7 @@ def get_gene(gene_id):
     GET the details for a single gene. This will likely result in multiple results due to the potential number of
     variants in a single gene
     """
-    variants = [variant.to_json() for variant in Variant.query.filter_by(gene=gene_id).all()]
+    variants = [variant.to_json(i) for i, variant in enumerate(Variant.query.filter_by(gene=gene_id).all())]
     if variants:
         return jsonify({
             'status': 'success',
@@ -43,7 +43,7 @@ def get_all_genes():
     return jsonify({
         'status': 'success',
         'data': {
-            'variants': [variant.to_json() for variant in Variant.query.limit(100).all()]
+            'variants': [variant.to_json(i) for i, variant in enumerate(Variant.query.limit(100).all())]
         }
     }), 200
 

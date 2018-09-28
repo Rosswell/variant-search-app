@@ -3,25 +3,11 @@ import Autosuggest from 'react-autosuggest';
 import '../styles/components/_gene-entry.scss'
 
 
-// const renderSuggestion = suggestion => (
-//   <span>{suggestion}</span>
-// );
 const renderSuggestion = suggestion => suggestion
 
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-
-// function renderSuggestionsContainer({ containerProps , children, query }) {
-//   return (
-//     <div {... containerProps}>
-//       {children}
-//       <div>
-//         Press Enter to search <strong>{query}</strong>
-//       </div>
-//     </div>
-//   );
-// }
 
 const getSuggestionValue = suggestion => suggestion;
 
@@ -103,9 +89,6 @@ export default class GeneEntry extends React.Component {
       <div>
         {error && <p className="gene-entry-error">{error}</p>}
         <Autosuggest
-            // theme={{
-            //   input: 'gene-entry__input'
-            // }}
             suggestions={suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
@@ -113,7 +96,6 @@ export default class GeneEntry extends React.Component {
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
             renderInputComponent={this.renderInputComponent}
-            // renderSuggestionsContainer={renderSuggestionsContainer}
           />
       </div>
     );

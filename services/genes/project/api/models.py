@@ -32,8 +32,9 @@ class Variant(db.Model):
     reported_ref = db.Column(db.String(100))
     reported_alt = db.Column(db.String(100))
 
-    def to_json(self):
+    def to_json(self, i):
         return {
+            'id': i + 1,
             'gene'                   : self.gene,
             'nucleotide_change'      : self.nucleotide_change,
             'protein_change'         : self.protein_change,
