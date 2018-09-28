@@ -1,18 +1,19 @@
 .header {
-    // background: $off-black;
-    color: $turquoise;
-    margin-bottom: $xl-size;
-    padding: $m-size $m-size;
-    text-align: center;
+  margin-bottom: $xl-size;
+  padding: $m-size $m-size;
+  text-align: center;
 }
 
 .header__title {
-    font-size: $l-size;
-    margin: 0;
+  background: -webkit-gradient(linear, left top, right bottom, from($light-green), to($dark-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: $l-size;
+  margin: 0;
 }
 
 @media (max-width: $desktop-breakpoint) {
-    .header {
-        margin-bottom: $m-size;
-    }
+  .header {
+    margin-bottom: $m-size;
+  }
 }

@@ -4,7 +4,7 @@
   padding: $s-size;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 2.25rem;
-  border: .3rem solid darken($turquoise, 10%);
+  border: $input-border;
   margin: 0 $s-size 0 0;
 }
 
@@ -20,14 +20,16 @@
 .react-autosuggest__suggestions-container--open {
   display: block;
   position: relative;
-  top: -16px;
+  top: -19px;
   left: 16px;
   width: 280px;
-  border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
-  z-index: 2;
+  z-index: 100;
+  border-left: $input-border;
+  border-bottom: $input-border;
+  border-right: $input-border;
 }
 
 .react-autosuggest__suggestions-list {
@@ -42,5 +44,7 @@
 }
 
 .react-autosuggest__suggestion--highlighted {
-  background-color: #ddd;
+  background-color: $dark-blue;
+  transition: all 0.3s ease-out;
+  color: #fff;
 }
