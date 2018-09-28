@@ -33,9 +33,9 @@ class App extends React.Component {
   };
 
   // load default data
-  componentDidMount() {
-  this.fetchData('')
-}
+//   componentDidMount() {
+//   this.fetchData('')
+// }
 
   render() {
     return (
@@ -43,15 +43,18 @@ class App extends React.Component {
         <Header />
         <GeneEntry 
           fetchData={this.fetchData}
-
+          data={this.state.variantData}
         />
         <br/>
-        <GeneTable 
-          data={this.state.variantData}
-          geneInput={this.state.searchedGene}
-          fetchData={this.fetchData}
-          loading={this.state.loading}
-        />
+        {
+          this.state.searchedGene &&
+          <GeneTable 
+            data={this.state.variantData}
+            geneInput={this.state.searchedGene}
+            fetchData={this.fetchData}
+            loading={this.state.loading}
+          />
+        }
       </div>
     )
   }
