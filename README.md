@@ -22,6 +22,18 @@ Activate the virtual environment and install the flask libraries required to han
 $ source env/bin/activate
 $ pip install -r requirements.txt
 ```
+
+### React installation & setup
+Navigate to the backend directory and create a python virtual environment
+```
+$ cd variant-search-app/services/client
+$ yarn install
+```
+Activate the virtual environment and install the flask libraries required to handle API requests
+```
+$ source env/bin/activate
+$ pip install -r requirements.txt
+```
 ## The Process
 1. Build a static API route
 2. Attach API to sqlite DB, make API dynamic
@@ -36,3 +48,6 @@ $ pip install -r requirements.txt
 7. Stand up frontend
 8. Create MVP dynamically rendered components
 9. Create table components and associated subcomponents
+10. Style table components
+11. Backfill python tests
+12. Write React tests
