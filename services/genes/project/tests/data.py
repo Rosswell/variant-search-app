@@ -1,3 +1,4 @@
+"""Data for seeding the DB for testing purposes"""
 multi_variant_data = {
     'status': 'success',
     'data': {
@@ -13,7 +14,7 @@ multi_variant_data = {
                 'genomic_stop': None,
                 'inferred_classification': 'Pathogenic',
                 'last_evaluated': 'Thu, 13 Mar 2014 00:00:00 GMT',
-                'last_updated':'Thu, 14 Sep 2017 00:00:00 GMT',
+                'last_updated': 'Thu, 14 Sep 2017 00:00:00 GMT',
                 'nucleotide_change': 'NM_003159.2:c.-162-?_99+?del',
                 'other_mappings': 'NM_003159.2:c.-162-?_99+?del',
                 'protein_change': None,
