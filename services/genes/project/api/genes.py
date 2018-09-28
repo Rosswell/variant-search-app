@@ -18,7 +18,6 @@ def get_gene(gene_id):
     GET the details for a single gene. This will likely result in multiple results due to the potential number of
     variants in a single gene
     """
-
     variants = [variant.to_json() for variant in Variant.query.filter_by(gene=gene_id).all()]
     if variants:
         return jsonify({
@@ -45,5 +44,20 @@ def get_all_genes():
         'status': 'success',
         'data': {
             'variants': [variant.to_json() for variant in Variant.query.limit(100).all()]
+        }
+    }), 200
+
+
+@genes_blueprint.route('/gene_names/', methods=['GET'])
+def get_all_gene_names():
+    """
+    GET all genes names. This will likely result in multiple results due to the potential number of
+    variants in a single gene
+    """
+    gene_names = Variant.query.with_entities(Variant.gene).distinct().filter(Variant.gene != None).all()
+    return jsonify({
+        'status': 'success',
+        'data': {
+            'gene_names': [name for sublist in gene_names for name in sublist]
         }
     }), 200
