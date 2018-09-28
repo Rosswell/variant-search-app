@@ -19,33 +19,32 @@ class App extends React.Component {
       loading: true,
       searchedGene: searchedGene
     });
+
     // fetch data
     axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/genes/${searchedGene}`)
       .then((res) => { 
-        console.log(res);
         this.setState({
           variantData: res.data.data.variants,
           loading: false
         });
       }).catch((err) => { 
-        console.log(err);
+        console.error(err);
         return err;
     });
   };
 
-  // load default data
+  // load gene names for the live suggestions upon mounting
   componentDidMount() {
     axios.get(`${process.env.REACT_APP_GENES_SERVICE_URL}:5001/gene_names/`)
-        .then((res) => { 
-          console.log('gene names getted successfully');
-          this.setState({
-            geneSuggestions: res.data.data.gene_names
-          });
-        }).catch((err) => { 
-          console.log(err);
-          return err;
-      });
-};
+      .then((res) => { 
+        this.setState({
+          geneSuggestions: res.data.data.gene_names
+        });
+      }).catch((err) => { 
+        console.error(err);
+        return err;
+    });
+  };
 
   render() {
     return (
@@ -60,8 +59,6 @@ class App extends React.Component {
           this.state.searchedGene &&
           <GeneTable 
             data={this.state.variantData}
-            geneInput={this.state.searchedGene}
-            fetchData={this.fetchData}
             loading={this.state.loading}
           />
         }

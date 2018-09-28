@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import _ from "lodash";
 
 const largeColumnSize = 450;
 const defaultColumnSize = 175;
@@ -50,7 +49,6 @@ const getColumns = (data) => {
     columnFields.wordSpacing = columnFields.minWidth;
     columns.push(columnFields);
   }
-  console.log(columns)
   return columns;
 }
 
@@ -84,8 +82,7 @@ export default class GeneTable extends React.Component {
           ]}
           loading={this.props.loading}
           defaultPageSize={this.state.pageSize}
-          noDataText='No genes found with given name'
-          // onFetchData={() => {this.props.fetchData(this.props.geneInput)}}
+          noDataText='No genes found with provided name'
           className="gene-table"
           pageSize={this.state.pageSize}
           // This will force the table body to overflow and scroll, since there is not enough room

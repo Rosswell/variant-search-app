@@ -2,7 +2,6 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import '../styles/components/_gene-entry.scss'
 
-
 const renderSuggestion = suggestion => suggestion
 
 function escapeRegexCharacters(str) {
@@ -13,6 +12,7 @@ const getSuggestionValue = suggestion => suggestion;
 
 export default class GeneEntry extends React.Component {
   state = {
+    // TODO: remove error and uses
     error: undefined,
     value: '',
     geneNames: this.props.geneNames,

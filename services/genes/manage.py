@@ -1,9 +1,9 @@
 from flask.cli import FlaskGroup
 from project import create_app, db
-from project.api.models import Variant
+from project.tests.data import multi_variant_data
+from project.api.genes import Variant
 import unittest
 import coverage
-
 
 COV = coverage.coverage(
     branch=True,
@@ -38,6 +38,13 @@ def test():
 
 
 @cli.command()
+def seed_db():
+    for variant in multi_variant_data['data']['variants']:
+        db.session.add(Variant(**variant))
+        db.session.commit()
+
+
+@cli.command()
 def cov():
     """Runs the unit tests with coverage."""
     tests = unittest.TestLoader().discover('project/tests')
@@ -54,9 +61,29 @@ def cov():
 
 
 @cli.command()
-def ingest_from_tsv():
-    """ Load prod data from tsv """
-    # TODO: do this (requires preprocessing)
+def ingest_from_tsv(tsv_path):
+    """ Convert data to csv with pipe separator - postgres misinterprets nondelimiter commas - and writes to the db """
+    import pandas as pd
+
+    csv_filename = tsv_path[:-4] + '.csv'
+    db_columns = ['gene', 'nucleotide_change', 'protein_change', 'other_mappings', 'alias', 'transcripts', 'region',
+                  'reported_classification', 'inferred_classification', 'source', 'last_evaluated', 'last_updated',
+                  'url', 'submitter_comment', 'assembly', 'chr', 'genomic_start', 'genomic_stop', 'ref', 'alt',
+                  'accession', 'reported_ref', 'reported_alt']
+
+    df = pd.read_csv(tsv_path, sep='\t')
+    # filling NaNs with 'NULL' as some null values are already written that way. Making it ubiquitous for loading
+
+    df.fillna('NULL').to_csv(csv_filename, sep='|', index=False, header=False)
+    db_engine = db.create_engine()
+    conn = db_engine.raw_connection()
+    cursor = conn.cursor()
+    cursor.copy_from(csv_filename, table='variant', sep='|', null='NULL', columns=db_columns)
+
+    # df.to_sql('variant', db_engine, )
+    # db.session.c
+    # df.fillna('NULL')  # .to_csv(tsv_path[:-4] + '.csv', sep='|', index=False, header=False)
+    # # TODO: do this (requires preprocessing)
 
 
 if __name__ == '__main__':
