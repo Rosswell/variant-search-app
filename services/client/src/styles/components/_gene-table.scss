@@ -1,0 +1,22 @@
+.gene-table {
+    // background: darken($turquoise, 10%);
+}
+
+.gene-table__header {
+    background: $dark-blue; // width: 30rem !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-transform: capitalize;
+}
+
+.gene-table__column {
+    white-space: pre-line !important;
+    word-wrap: break-word;
+    font-size: $s-size;
+}
+
+.gene-table__list-column {
+    white-space: pre-line !important;
+    word-wrap: break-word;
+    word-spacing: 255px;
+    font-size: $s-size;
+}

@@ -4,7 +4,7 @@
     flex-direction: column;
 }
 
-.ene-entry-error {
+.gene-entry-error {
     color: $off-black;
     font-style: italic;
     margin: $m-size 0 0 0;
@@ -14,12 +14,13 @@
 
 .gene-entry__input {
     flex-grow: 1;
-    background: $dark-blue;
     color: $off-black;
     border: none;
-    border: .3rem solid darken($dark-blue, 10%);
-    margin: 0 0 $s-size 0; //margin-right: $s-size;
+    border: .3rem solid darken($turquoise, 10%);
+    margin: 0 0 $s-size 0;
     padding: $s-size;
+    font-size: 2.25rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 // parameter is the condition under which to apply the following styles
