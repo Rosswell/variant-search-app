@@ -43,7 +43,7 @@ Spin up the postgres/flask docker container. This will serve the API endpoints a
 $ cd variant-search-app
 $ docker-compose -f docker-compose-dev.yml up -d --build
 ```
-Create and fill the DB - note that while pandas is required for local tsv to csv transformation, but it is not required by the docker image. This script in its current state is quite fragile, and will break if the tsv file is moved or renamed.
+Create and fill the DB - note that while pandas is required for local tsv to csv transformation, but it is not required by the docker image. This script in its current state is quite fragile, and will break if the tsv file is moved or renamed. The DB password is the default, `postgres`.
 ```
 $ docker-compose -f docker-compose-dev.yml run genes python manage.py recreate-db
 $ cd services/genes
