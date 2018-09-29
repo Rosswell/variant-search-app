@@ -48,7 +48,7 @@ Create and fill the DB - note that while pandas is required for local tsv to csv
 $ docker-compose -f docker-compose-dev.yml run genes python manage.py recreate-db
 $ cd services/genes
 $ pip install pandas
-$ python manage.py tsv-to-csv
+$ python3 manage.py tsv-to-csv
 $ chmod +x load_data.sh && ./load_data.sh
 ```
 Start the React app
