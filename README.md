@@ -3,9 +3,9 @@
 ![](assets/vs_demo.gif)
 
 ## Prerequisites
-Python 3.6
-npm or yarn
-docker-compose
+* [Python 3](https://www.python.org/)
+* [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/en/)
+* [docker-compose](https://docs.docker.com/compose/)
 
 ## Installation
 Clone the repo
@@ -17,7 +17,7 @@ $ git clone git@github.com:Rosswell/variant-search-app.git
 Navigate to the genes directory and create a python virtual environment
 ```
 $ cd variant-search-app/services/genes
-$ python3.6 -m venv env
+$ python3 -m venv env
 ```
 Activate the virtual environment and install the flask libraries required to handle API requests
 ```
@@ -26,7 +26,12 @@ $ pip install -r requirements.txt
 ```
 
 ### React installation & setup
-Navigate to the client directory and install the libraries from package.lock
+Navigate to the client directory and install the libraries from package.lock with yarn:
+```
+$ cd variant-search-app/services/client
+$ yarn install
+```
+or with npm:
 ```
 $ cd variant-search-app/services/client
 $ yarn install
@@ -38,11 +43,13 @@ Spin up the postgres/flask docker container. This will serve the API endpoints a
 $ cd variant-search-app
 $ docker-compose -f docker-compose-dev.yml up -d --build
 ```
-Create and fill the DB
+Create and fill the DB - note that while pandas is required for local tsv to csv transformation, but it is not required by the docker image. This script in its current state is quite fragile, and will break if the tsv file is moved or renamed.
 ```
 $ docker-compose -f docker-compose-dev.yml run genes python manage.py recreate-db
 $ cd services/genes
-$ python manage.py ingest-from-tsv
+$ pip install pandas
+$ python manage.py tsv-to-csv
+$ chmod +x load_data.sh && ./load_data.sh
 ```
 Start the React app
 ```
