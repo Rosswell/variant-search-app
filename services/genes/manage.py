@@ -63,7 +63,7 @@ def cov():
 
 
 @cli.command()
-def csv_to_tsv():
+def tsv_to_csv():
     """ Convert data to csv with pipe separator - postgres misinterprets nondelimiter commas - and writes to the db """
     import pandas as pd
 
