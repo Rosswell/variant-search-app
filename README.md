@@ -3,7 +3,6 @@
 ![](assets/vs_demo.gif)
 
 ## Prerequisites
-* [Python 3](https://www.python.org/)
 * [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/en/)
 * [docker-compose](https://docs.docker.com/compose/)
 
@@ -13,19 +12,9 @@ Clone the repo
 $ git clone git@github.com:Rosswell/variant-search-app.git
 ```
 
-### Flask installation & setup
-Navigate to the genes directory and create a python virtual environment
-```
-$ cd variant-search-app/services/genes
-$ python3 -m venv env
-```
-Activate the virtual environment and install the flask libraries required to handle API requests
-```
-$ source env/bin/activate
-$ pip install -r requirements.txt
-```
-
 ### React installation & setup
+React is not dockerized, so the React app is run locally.
+
 Navigate to the client directory and install the libraries from package.lock with yarn:
 ```
 $ cd variant-search-app/services/client
@@ -34,7 +23,7 @@ $ yarn install
 or with npm:
 ```
 $ cd variant-search-app/services/client
-$ yarn install
+$ npm install
 ```
 
 ### Standing up the app
@@ -43,18 +32,17 @@ Spin up the postgres/flask docker container. This will serve the API endpoints a
 $ cd variant-search-app
 $ docker-compose -f docker-compose-dev.yml up -d --build
 ```
-Create and fill the DB - note that while pandas is required for local tsv to csv transformation, but it is not required by the docker image. This script in its current state is quite fragile, and will break if the tsv file is moved or renamed. The DB password is the default, `postgres`.
+Create and fill the DB
 ```
 $ docker-compose -f docker-compose-dev.yml run genes python manage.py recreate-db
-$ cd services/genes
-$ pip install pandas
-$ python3 manage.py tsv-to-csv
 $ chmod +x load_data.sh && ./load_data.sh
 ```
 Start the React app
 ```
 $ cd variant-search-app/services/client
 $ npm start
+# or, with yarn:
+$ yarn start
 ```
 
 ## Run the few tests that I had time to write
@@ -67,6 +55,8 @@ React tests
 ```
 $ cd variant-search-app/services/client
 $ npm test
+# with yarn:
+$ yarn test
 ```
 
 ## The Process
