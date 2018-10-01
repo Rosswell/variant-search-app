@@ -69,20 +69,11 @@ def tsv_to_csv():
 
     tsv_path = os.path.join(os.getcwd(), 'raw_data', 'variants.tsv')
     csv_filename = tsv_path[:-4] + '.csv'
-    db_columns = ['gene', 'nucleotide_change', 'protein_change', 'other_mappings', 'alias', 'transcripts', 'region',
-                  'reported_classification', 'inferred_classification', 'source', 'last_evaluated', 'last_updated',
-                  'url', 'submitter_comment', 'assembly', 'chr', 'genomic_start', 'genomic_stop', 'ref', 'alt',
-                  'accession', 'reported_ref', 'reported_alt']
 
     df = pd.read_csv(tsv_path, sep='\t')
     # filling NaNs with 'NULL' as some null values are already written that way. Making it ubiquitous for loading
 
     df.fillna('NULL').to_csv(csv_filename, sep='|', index=False, header=False)
-    db_engine = db.create_engine("postgresql://postgres:postgres@localhost:5435/variant_dev")
-    conn = db_engine.raw_connection()
-    cursor = conn.cursor()
-    with open(csv_filename, 'r') as file:
-        cursor.copy_from(file, table='variant', sep='|', null='NULL', columns=db_columns)
 
 
 if __name__ == '__main__':
