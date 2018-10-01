@@ -1,11 +1,11 @@
-import React from 'react';
-import Autosuggest from 'react-autosuggest';
-import '../styles/components/_gene-entry.scss'
+import React from "react";
+import Autosuggest from "react-autosuggest";
+import "../styles/components/_gene-entry.scss";
 
-const renderSuggestion = suggestion => suggestion
+const renderSuggestion = suggestion => suggestion;
 
 function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 const getSuggestionValue = suggestion => suggestion;
@@ -14,35 +14,35 @@ export default class GeneEntry extends React.Component {
   state = {
     // TODO: remove error and uses
     error: undefined,
-    value: '',
+    value: "",
     geneNames: this.props.geneNames,
     suggestions: []
-  }
+  };
 
-  renderInputComponent = (inputProps) => (
-  <div>
-    <form 
-      onSubmit={this.handleGeneVerification}
-      className="gene-entry"
-    >
-      <input name='inputGene' {...inputProps} />
-      <button className="gene-entry__button">Search for Gene</button>
-    </form>
-    
-  </div>
-);
+  renderInputComponent = inputProps => (
+    <div>
+      <form onSubmit={this.handleGeneVerification} className="gene-entry">
+        <input name="inputGene" {...inputProps} />
+        <button className="gene-entry__button">Search for Gene</button>
+      </form>
+    </div>
+  );
 
-  getSuggestions = (value) => {
+  getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    if (escapeRegexCharacters(inputValue.trim()) === '') {
+    if (escapeRegexCharacters(inputValue.trim()) === "") {
       return [];
     }
-    
-    return inputLength === 0 ? [] : (this.props.geneNames.filter(gene =>
-      gene.toLowerCase().slice(0, inputLength) === inputValue
-    )).slice(0, 6);
+
+    return inputLength === 0
+      ? []
+      : this.props.geneNames
+          .filter(
+            gene => gene.toLowerCase().slice(0, inputLength) === inputValue
+          )
+          .slice(0, 6);
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
@@ -63,16 +63,16 @@ export default class GeneEntry extends React.Component {
     });
   };
   // flesh this out to provide suggestions
-  handleGeneVerification = (e) => {
+  handleGeneVerification = e => {
     // error handling for text input
     e.preventDefault();
-    const gene = e.target.elements.inputGene.value.trim()
-    const error = this.props.fetchData(gene)
+    const gene = e.target.elements.inputGene.value.trim();
+    const error = this.props.fetchData(gene);
 
-    this.setState(() => ({ error }))
+    this.setState(() => ({ error }));
 
     if (!error) {
-      e.target.elements.inputGene.value = ''
+      e.target.elements.inputGene.value = "";
     }
   };
   render() {
@@ -80,7 +80,7 @@ export default class GeneEntry extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Type a gene name',
+      placeholder: "Type a gene name",
       value,
       onChange: this.onChange
     };
@@ -89,14 +89,14 @@ export default class GeneEntry extends React.Component {
       <div>
         {error && <p className="gene-entry-error">{error}</p>}
         <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
-            renderInputComponent={this.renderInputComponent}
-          />
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
+          renderInputComponent={this.renderInputComponent}
+        />
       </div>
     );
   }
